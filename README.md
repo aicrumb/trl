@@ -2,7 +2,8 @@
 > Train transformer language models with reinforcement learning.
 
 ## Note from this fork-er
-I don't feel like updating the entire readme at the moment, just know that you can replace trl.gpt2 with trl.bloom, replace any other instance of "GPT2" with "Bloom," and any demo code should work. I'm possibly looking towards releasing a Colab notebook that finetunes Bloom-560m for prompt generation with Stable Diffusion (depending on certain factors mostly outside of my control). 
+I don't feel like updating the entire readme at the moment, just know that you can replace trl.gpt2 with trl.bloom, replace any other instance of "GPT2" with "Bloom," and any demo code should work. The py files aren't built from the demo notebooks so if you were planning on using that functionality, sorry. Also you can do 
+`!pip install git+https://github.com/aicrumb` to install this thing. I'm possibly looking towards releasing a Colab notebook that finetunes Bloom-560m for prompt generation with Stable Diffusion (depending on certain factors mostly outside of my control). 
 
 ## What is it?
 With `trl` you can train transformer language models with Proximal Policy Optimization (PPO). The library is built on top of the [`transformer`](https://github.com/huggingface/transformers) library by  🤗 Hugging Face. Therefore, pre-trained language models can be directly loaded via `transformers`. At this point only decoder architectures such as GTP2 are implemented.
