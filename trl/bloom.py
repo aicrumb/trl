@@ -100,7 +100,7 @@ class BloomHeadWithValueModel(BloomPreTrainedModel):
         mc_token_ids=None,
         lm_labels=None,
         mc_labels=None,
-        return_dict=False,
+        return_dict=True,
         output_attentions=False,
         output_hidden_states=False,
     ):
