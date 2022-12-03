@@ -258,7 +258,9 @@ class PPOTrainer:
         vf_loss = .5 * torch.mean(torch.max(vf_losses1, vf_losses2))
         vf_clipfrac =  torch.mean(torch.gt(vf_losses2, vf_losses1).double())
 
-        ratio = torch.exp(logprob - old_logprobs)
+        # im not sure if this breaks gpt2 or not, it was needed to fix BLOOM
+        # remove the .unsqueeze if it breaks it. i'm focused on my project
+        ratio = torch.exp(logprob - old_logprobs).unsqueeze(-1)
 
         pg_losses = -advantages * ratio
         pg_losses2 = -advantages * torch.clamp(ratio,
