@@ -77,7 +77,7 @@ class BloomHeadWithValueModel(BloomPreTrainedModel):
         super().__init__(config)
         config.num_labels = 1
         self.transformer = BloomModel(config)
-        self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
+        self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
         self.v_head = ValueHead(config)
 
         self.init_weights()
