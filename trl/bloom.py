@@ -119,17 +119,17 @@ class BloomHeadWithValueModel(BloomPreTrainedModel):
         value = self.v_head(hidden_states).squeeze(-1)
 
 
-        if not return_dict:
-            outputs = (lm_logits,) + transformer_outputs[1:] + (value,)
-            return outputs
-
-        return CausalLMOutputWithCrossAttentions(
-            loss=loss,
-            logits=lm_logits,
-            past_key_values=transformer_outputs.past_key_values,
-            hidden_states=transformer_outputs.hidden_states,
-            attentions=transformer_outputs.attentions,
-            cross_attentions=transformer_outputs.cross_attentions,
-            value=value,
-        )
+#         if not return_dict:
+        outputs = (lm_logits,) + transformer_outputs[1:] + (value,)
         return outputs
+
+#         return CausalLMOutputWithCrossAttentions(
+#             loss=loss,
+#             logits=lm_logits,
+#             past_key_values=transformer_outputs.past_key_values,
+#             hidden_states=transformer_outputs.hidden_states,
+#             attentions=transformer_outputs.attentions,
+#             cross_attentions=transformer_outputs.cross_attentions,
+#             value=value,
+#         )
+#         return outputs
