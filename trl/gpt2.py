@@ -5,7 +5,6 @@ __all__ = ['CausalLMOutputWithCrossAttentions', 'ValueHead', 'GPT2HeadWithValueM
 # Cell
 
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, GPT2Model, GPT2PreTrainedModel
-from transformers import top_k_top_p_filtering
 from transformers.modeling_outputs import ModelOutput
 from torch import nn
 from torch.nn import Identity
@@ -136,19 +135,3 @@ class GPT2HeadWithValueModel(GPT2PreTrainedModel):
             value=value,
         )
         return outputs
-
-# Cell
-
-def respond_to_batch(model, queries, txt_len=20, top_k=0, top_p=1.0):
-    """Sample text from language model."""
-    input_ids = queries
-    for i in range(txt_len):
-        # Get Logits
-        outputs = model(input_ids)
-        next_token_logits = outputs[0][:, -1, :]
-        next_token_logits = top_k_top_p_filtering(next_token_logits, top_k=top_k, top_p=top_p)
-        # Sample
-        probs = F.softmax(next_token_logits, dim=-1)
-        next_token = torch.multinomial(probs, num_samples=1).squeeze(1)
-        input_ids = torch.cat([input_ids, next_token.unsqueeze(-1)], dim=-1)
-    return input_ids[:, -txt_len:]
