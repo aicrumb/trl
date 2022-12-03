@@ -248,7 +248,11 @@ class PPOTrainer:
         advantages = whiten(advantages)
         advantages = advantages.detach()
 
-        logits, _, vpred = self.model(model_input)
+#         logits, _, vpred = self.model(model_input)
+        model_output = self.model(model_input)
+        logits = model_output.logits
+        vpred = model_output.value
+      
         logprob = logprobs_from_logits(logits[:,:-1,:], model_input[:, 1:])
 
         #only the generation part of the values/logprobs is needed
