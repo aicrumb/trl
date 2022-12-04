@@ -118,7 +118,10 @@ class BloomHeadWithValueModel(BloomPreTrainedModel):
         lm_logits = self.lm_head(hidden_states)
         value = self.v_head(hidden_states).squeeze(-1)
 
-
+        # god please forgive me for what im about to do, i kept getting nan/inf/<0 errors
+        lm_logits = lm_logits - lm_logits.min() # normalize to >0
+        lm_logits = torch.nan_to_num(lm_logits)
+        
         if not return_dict:
             outputs = (lm_logits,) + transformer_outputs[1:] + (value,)
             return outputs
