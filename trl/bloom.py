@@ -119,8 +119,9 @@ class BloomHeadWithValueModel(BloomPreTrainedModel):
         value = self.v_head(hidden_states).squeeze(-1)
 
         # god please forgive me for what im about to do, i kept getting nan/inf/<0 errors
-        lm_logits = lm_logits - lm_logits.min() # normalize to >0
-        lm_logits = torch.nan_to_num(lm_logits)
+        lm_logits = lm_logits - lm_logits.min() # normalize to >=0
+        lm_logits = torch.nan_to_num(lm_logits) # removes inf, nan
+        # i think thats all i have to do, i dont think the sampling method cares about range of values too much?
         
         if not return_dict:
             outputs = (lm_logits,) + transformer_outputs[1:] + (value,)
